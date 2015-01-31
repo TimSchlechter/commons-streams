@@ -1,2 +1,2 @@
 # xstream
-Extends the streaming API
+Extends the Java streaming API
