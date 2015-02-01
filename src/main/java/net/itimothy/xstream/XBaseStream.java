@@ -6,6 +6,13 @@ import java.util.stream.*;
 
 import static java.util.stream.Stream.concat;
 
+/**
+ * Base class for all X*Stream classes. Implements the extensions on the Streams API
+ * by using the implementations of the standard API provided by the derived classes.
+ *
+ * @param <T> the type of the stream elements
+ * @param <X> the type of of the stream implementing XBaseStream
+ */
 abstract class XBaseStream<T extends Object, X extends XBaseStream<T, X>> {
 
     public boolean contains(T item) {
@@ -31,7 +38,7 @@ abstract class XBaseStream<T extends Object, X extends XBaseStream<T, X>> {
     public <U extends Comparable<? super U>> X sorted(Function<? super T, ? extends U> keyExtractor) {
         return sorted(Comparator.comparing(keyExtractor));
     }
-    
+
     public X without(T item) {
         return filter(i -> !i.equals(item));
     }
@@ -40,13 +47,13 @@ abstract class XBaseStream<T extends Object, X extends XBaseStream<T, X>> {
         return collect(Collectors.toList());
     }
 
-    public <K> Map<K,T> toMap(Function<? super T, ? extends K> keyMapper) {
+    public <K> Map<K, T> toMap(Function<? super T, ? extends K> keyMapper) {
         return toMap(keyMapper, x -> x);
     }
-    
-    public <K, U> Map<K,U> toMap(
-            Function<? super T, ? extends K> keyMapper,
-            Function<? super T, ? extends U> valueMapper) {
+
+    public <K, U> Map<K, U> toMap(
+        Function<? super T, ? extends K> keyMapper,
+        Function<? super T, ? extends U> valueMapper) {
         return collect(Collectors.toMap(keyMapper, valueMapper));
     }
 
