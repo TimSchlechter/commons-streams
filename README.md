@@ -20,10 +20,10 @@ Person[] men = {bob};
 Person[] women = {ann, carol};
 
 List<Person> people = xstream(men).union(women).toList();
-// → [bob, ann, carol]
+// → [bob,ann,carol]
 
-xstream(people).sorted(p -> p.getName()).toList();
-// → [ann,bob,carol]
+xstream(people).sorted(p -> p.getAge()).toList();
+// → [carol,bob,ann]
 
 xstream(people).without(bob).contains(bob);
 // → false
@@ -65,6 +65,16 @@ xstream(women).without(ann).contains(ann)
 // → false
 ```
 
+### .sorted()
+```java
+Person ann = new Person("Ann", 30);
+Person carol = new Person("Carol", 10);
+Person[] women = {ann, carol};
+
+xstream(people).sorted(p -> p.getAge()).toList()
+// → [carol,bob,ann]
+```
+
 #### .union()
 ```java
 Person ann = new Person("Ann", 30);
@@ -74,8 +84,18 @@ Person carol = new Person("Carol", 10);
 Person[] men = {bob};
 Person[] women = {ann, carol};
 
-List<Person> people = xstream(men).union(women).toList();
-// → [bob, ann, carol]
+people = xstream(men).union(women).toList();
+// → [bob,ann,carol]
+```
+
+#### .toList()
+```java
+// TODO: add example
+```
+
+#### .toMap()
+```java
+// TODO: add example
 ```
 
 #### .without()
