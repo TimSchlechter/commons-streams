@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-public class XDoubleStream extends XPrimitiveBaseStream<Double, XDoubleStream> implements DoubleStream {
+class XDoubleStream extends XPrimitiveBaseStream<Double, XDoubleStream> implements DoubleStream {
     private final DoubleStream stream;
 
     public static XDoubleStream wrap(DoubleStream stream) {
@@ -131,7 +131,7 @@ public class XDoubleStream extends XPrimitiveBaseStream<Double, XDoubleStream> i
     }
 
     @Override
-    protected XDoubleStream unboxed(Stream<Double> stream) {
+    protected XDoubleStream createInstance(Stream<Double> stream) {
         return wrap(stream.mapToDouble(x -> x));
     }
 

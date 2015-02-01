@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.function.*;
 import java.util.stream.*;
 
-public abstract class XPrimitiveBaseStream<T, X extends XPrimitiveBaseStream<T, X>> extends XBaseStream<T, X> {
+abstract class XPrimitiveBaseStream<T, X extends XPrimitiveBaseStream<T, X>> extends XBaseStream<T, X> {
     public <R> XStream<R> map(Function<? super T, ? extends R> mapper) {
         return boxed().map(mapper);
     }

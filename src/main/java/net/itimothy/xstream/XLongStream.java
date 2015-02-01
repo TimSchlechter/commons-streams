@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-public class XLongStream extends XBaseStream<Long, XLongStream> implements LongStream {
+class XLongStream extends XBaseStream<Long, XLongStream> implements LongStream {
     private final LongStream stream;
 
     public static XLongStream wrap(LongStream stream) {
@@ -136,7 +136,7 @@ public class XLongStream extends XBaseStream<Long, XLongStream> implements LongS
     }
 
     @Override
-    protected XLongStream unboxed(Stream<Long> stream) {
+    protected XLongStream createInstance(Stream<Long> stream) {
         return wrap(stream.mapToLong(x -> x));
     }
 

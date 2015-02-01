@@ -142,7 +142,7 @@ class XIntStream extends XPrimitiveBaseStream<Integer, XIntStream> implements In
 
     @Override
     public XStream<Integer> boxed() {
-        return XStream.stream(stream.boxed());
+        return XStream.wrap(stream.boxed());
     }
 
     @Override
@@ -156,7 +156,7 @@ class XIntStream extends XPrimitiveBaseStream<Integer, XIntStream> implements In
     }
 
     @Override
-    protected XIntStream unboxed(Stream<Integer> stream) {
+    protected XIntStream createInstance(Stream<Integer> stream) {
         return wrap(stream.mapToInt(x -> x));
     }
 

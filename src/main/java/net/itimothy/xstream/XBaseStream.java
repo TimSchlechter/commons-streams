@@ -6,14 +6,8 @@ import java.util.stream.*;
 
 import static java.util.stream.Stream.concat;
 
-public abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
+abstract class XBaseStream<T extends Object, X extends XBaseStream<T, X>> {
 
-    /**
-     * Checks if the given item is in stream
-     *
-     * @param item the item to test
-     * @return true if item is in stream, else false
-     */
     public boolean contains(T item) {
         return anyMatch(i -> i.equals(item));
     }
@@ -23,14 +17,32 @@ public abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
     }
 
     public X union(X other) {
-        return unboxed(concat(boxed(), other.boxed()).distinct());
+        return createInstance(concat(boxed(), other.boxed()).distinct());
+    }
+
+    public <U extends Comparable<? super U>> X sorted(Function<? super T, ? extends U> keyExtractor) {
+        return sorted(Comparator.comparing(keyExtractor));
+    }
+    
+    public X without(T item) {
+        return filter(i -> !i.equals(item));
     }
 
     public List<T> toList() {
         return collect(Collectors.toList());
     }
 
-    protected abstract X unboxed(Stream<T> stream);
+    public <K> Map<K,T> toMap(Function<? super T, ? extends K> keyMapper) {
+        return toMap(keyMapper, x -> x);
+    }
+    
+    public <K, U> Map<K,U> toMap(
+            Function<? super T, ? extends K> keyMapper,
+            Function<? super T, ? extends U> valueMapper) {
+        return collect(Collectors.toMap(keyMapper, valueMapper));
+    }
+
+    protected abstract X createInstance(Stream<T> stream);
 
     public abstract XStream<T> boxed();
 

@@ -4,30 +4,13 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-public class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
+class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
 
-    private final Stream<T> stream;
-
-
-    public static XIntStream stream(int... items) {
-        return XIntStream.wrap(Arrays.stream(items));
-    }
-
-    public static XLongStream stream(long... items) {
-        return XLongStream.wrap(Arrays.stream(items));
-    }
-
-    public static XDoubleStream stream(double... items) {
-        return XDoubleStream.wrap(Arrays.stream(items));
-    }
-
-    public static <T> XStream<T> stream(Collection<T> collection) {
-        return stream(collection.stream());
-    }
-
-    public static <T> XStream<T> stream(Stream<T> stream) {
+    public static <T> XStream<T> wrap(Stream<T> stream) {
         return new XStream(stream);
     }
+    
+    private final Stream<T> stream;
 
     private XStream(Stream<T> stream) {
         this.stream = stream;
@@ -69,8 +52,8 @@ public class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> 
     }
 
     @Override
-    protected XStream<T> unboxed(Stream<T> stream) {
-        return stream(stream);
+    protected XStream<T> createInstance(Stream<T> stream) {
+        return StreamFactory.xstream(stream);
     }
 
     @Override
@@ -80,12 +63,12 @@ public class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> 
 
     @Override
     public XStream<T> filter(Predicate<? super T> predicate) {
-        return stream(stream.filter(predicate));
+        return wrap(stream.filter(predicate));
     }
 
     @Override
     public <R> XStream<R> map(Function<? super T, ? extends R> mapper) {
-        return stream(stream.map(mapper));
+        return wrap(stream.map(mapper));
     }
 
     @Override
@@ -105,7 +88,7 @@ public class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> 
 
     @Override
     public <R> XStream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper) {
-        return stream(stream.flatMap(mapper));
+        return wrap(stream.flatMap(mapper));
     }
 
     @Override
@@ -125,32 +108,32 @@ public class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> 
 
     @Override
     public XStream<T> distinct() {
-        return stream(stream.distinct());
+        return wrap(stream.distinct());
     }
 
     @Override
     public XStream<T> sorted() {
-        return stream(stream.sorted());
+        return wrap(stream.sorted());
     }
 
     @Override
     public XStream<T> sorted(Comparator<? super T> comparator) {
-        return stream(stream.sorted(comparator));
+        return wrap(stream.sorted(comparator));
     }
 
     @Override
     public XStream<T> peek(Consumer<? super T> action) {
-        return stream(stream.peek(action));
+        return wrap(stream.peek(action));
     }
 
     @Override
     public XStream<T> limit(long maxSize) {
-        return stream(stream.limit(maxSize));
+        return wrap(stream.limit(maxSize));
     }
 
     @Override
     public XStream<T> skip(long n) {
-        return stream(stream.skip(n));
+        return wrap(stream.skip(n));
     }
 
     @Override
@@ -220,22 +203,22 @@ public class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> 
 
     @Override
     public XStream<T> sequential() {
-        return stream(stream.sequential());
+        return wrap(stream.sequential());
     }
 
     @Override
     public XStream<T> parallel() {
-        return stream(stream.parallel());
+        return wrap(stream.parallel());
     }
 
     @Override
     public XStream<T> unordered() {
-        return stream(stream.unordered());
+        return wrap(stream.unordered());
     }
 
     @Override
     public XStream<T> onClose(Runnable closeHandler) {
-        return stream(stream.onClose(closeHandler));
+        return wrap(stream.onClose(closeHandler));
     }
 
     @Override
