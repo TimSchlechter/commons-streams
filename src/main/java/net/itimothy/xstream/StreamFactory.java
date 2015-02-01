@@ -20,6 +20,10 @@ public class StreamFactory {
         return XDoubleStream.wrap(Arrays.stream(items));
     }
 
+    public static XCharacterStream xstream(String string) {
+        return XCharacterStream.wrap(string);
+    }
+    
     public static <T> XBaseStream<T, XStream<T>> xstream(T[] items) {
         return xstream(Arrays.stream(items));
     }
