@@ -20,6 +20,14 @@ abstract class XBaseStream<T extends Object, X extends XBaseStream<T, X>> {
         return createInstance(concat(boxed(), other.boxed()).distinct());
     }
 
+    public X union(Collection<T> other) {
+        return createInstance(concat(boxed(), other.stream()).distinct());
+    }
+
+    public X union(T... other) {
+        return createInstance(concat(boxed(), Arrays.stream(other)).distinct());
+    }
+
     public <U extends Comparable<? super U>> X sorted(Function<? super T, ? extends U> keyExtractor) {
         return sorted(Comparator.comparing(keyExtractor));
     }

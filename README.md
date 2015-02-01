@@ -1,9 +1,10 @@
 # xstream
-Extends the Java 8 Streams API
+Lightweight wrapper around the Java 8 Streams API to make code less verbose.
+xstream is 100% compatible with the Streams API.
 
 ### Usage
 ```java
-import static net.itimothy.xstream.StreamFacotry.xstream;
+import static net.itimothy.xstream.StreamFactory.xstream;
 
 Person anna = new Person("anna", 30);
 Person bob = new Person("bob", 20);
@@ -13,19 +14,15 @@ Person[] men = {bob};
 Person[] women = {anna, carol};
 
 List<Person> people = xstream(men).union(women).toList();
-// → [bob, anna, carol]   
+// → [bob, anna, carol]
 
 xstream(people)
     .sorted(p -> p.getName())
     .toList();
-// → [anna,bob,carol]   
+// → [anna,bob,carol]
 
-
-xstream(men).contains(anna);
+xstream(people).without(bob).contains(bob);
 // → false
-
-xstream(people).contains(anna);
-// → true
 ```
 ### Features
 
@@ -54,7 +51,13 @@ stream(women).without(anna).contains(anna)
 // → false
 ```
 
-#### .union&lt;T&gt;(Stream&lt;T&gt; other)
+#### .union
+```java
+union<T>(Stream<T> other)
+union<T>(Collection<T> other)
+union<T>(T... other)
+```
+
 ```java
 Person anna = new Person("anna", 30);
 Person bob = new Person("bob", 20);
