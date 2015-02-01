@@ -16,88 +16,78 @@ class XDoubleStream extends XPrimitiveBaseStream<Double, XDoubleStream> implemen
     }
 
     @Override
-    public DoubleStream filter(DoublePredicate predicate) {
-        return null;
+    public XDoubleStream filter(DoublePredicate predicate) {
+        return wrap(stream.filter(predicate));
     }
 
     @Override
-    public DoubleStream map(DoubleUnaryOperator mapper) {
-        return null;
+    public XDoubleStream map(DoubleUnaryOperator mapper) {
+        return wrap(stream.map(mapper));
     }
 
     @Override
     public <U> Stream<U> mapToObj(DoubleFunction<? extends U> mapper) {
-        return null;
+        return stream.mapToObj(mapper);
     }
 
     @Override
-    public IntStream mapToInt(DoubleToIntFunction mapper) {
-        return null;
+    public XDoubleStream flatMap(DoubleFunction<? extends DoubleStream> mapper) {
+        return wrap(stream.flatMap(mapper));
     }
 
     @Override
-    public LongStream mapToLong(DoubleToLongFunction mapper) {
-        return null;
-    }
-
-    @Override
-    public DoubleStream flatMap(DoubleFunction<? extends DoubleStream> mapper) {
-        return null;
-    }
-
-    @Override
-    public DoubleStream peek(DoubleConsumer action) {
-        return null;
+    public XDoubleStream peek(DoubleConsumer action) {
+        return wrap(stream.peek(action));
     }
 
     @Override
     public void forEach(DoubleConsumer action) {
-
+        stream.forEach(action);
     }
 
     @Override
     public void forEachOrdered(DoubleConsumer action) {
-
+        stream.forEachOrdered(action);
     }
 
     @Override
     public double[] toArray() {
-        return new double[0];
+        return stream.toArray();
     }
 
     @Override
     public double reduce(double identity, DoubleBinaryOperator op) {
-        return 0;
+        return stream.reduce(identity, op);
     }
 
     @Override
     public OptionalDouble reduce(DoubleBinaryOperator op) {
-        return null;
+        return stream.reduce(op);
     }
 
     @Override
     public <R> R collect(Supplier<R> supplier, ObjDoubleConsumer<R> accumulator, BiConsumer<R, R> combiner) {
-        return null;
+        return stream.collect(supplier, accumulator, combiner);
     }
 
     @Override
     public double sum() {
-        return 0;
+        return stream.sum();
     }
 
     @Override
     public OptionalDouble min() {
-        return null;
+        return stream.min();
     }
 
     @Override
     public OptionalDouble max() {
-        return null;
+        return stream.max();
     }
 
     @Override
     public OptionalDouble average() {
-        return null;
+        return stream.average();
     }
 
     @Override
@@ -107,27 +97,42 @@ class XDoubleStream extends XPrimitiveBaseStream<Double, XDoubleStream> implemen
 
     @Override
     public boolean anyMatch(DoublePredicate predicate) {
-        return false;
+        return stream.anyMatch(predicate);
     }
 
     @Override
     public boolean allMatch(DoublePredicate predicate) {
-        return false;
+        return stream.allMatch(predicate);
     }
 
     @Override
     public boolean noneMatch(DoublePredicate predicate) {
-        return false;
+        return stream.noneMatch(predicate);
     }
 
     @Override
     public OptionalDouble findFirst() {
-        return null;
+        return stream.findFirst();
     }
 
     @Override
     public OptionalDouble findAny() {
-        return null;
+        return stream.findAny();
+    }
+
+    @Override
+    public XStream<Double> boxed() {
+        return XStream.wrap(stream.boxed());
+    }
+
+    @Override
+    public PrimitiveIterator.OfDouble iterator() {
+        return stream.iterator();
+    }
+
+    @Override
+    public Spliterator.OfDouble spliterator() {
+        return stream.spliterator();
     }
 
     @Override
@@ -136,182 +141,98 @@ class XDoubleStream extends XPrimitiveBaseStream<Double, XDoubleStream> implemen
     }
 
     @Override
-    public XStream<Double> boxed() {
-        return null;
-    }
-
-    @Override
-    public PrimitiveIterator.OfDouble iterator() {
-        return null;
-    }
-
-    @Override
-    public Spliterator.OfDouble spliterator() {
-        return null;
-    }
-
-    @Override
     public XDoubleStream filter(Predicate<? super Double> predicate) {
-        return null;
-    }
-
-    @Override
-    public <R> XStream<R> map(Function<? super Double, ? extends R> mapper) {
-        return null;
+        return wrap(stream.filter(t -> predicate.test(t)));
     }
 
     @Override
     public XIntStream mapToInt(ToIntFunction<? super Double> mapper) {
-        return null;
+        return XIntStream.wrap(stream.mapToInt(value -> mapper.applyAsInt(value)));
     }
 
     @Override
-    public XLongStream mapToLong(ToLongFunction<? super Double> mapper) {
-        return null;
+    public XIntStream mapToInt(DoubleToIntFunction mapper) {
+        return XIntStream.wrap(stream.mapToInt(mapper));
     }
 
     @Override
-    public XDoubleStream mapToDouble(ToDoubleFunction<? super Double> mapper) {
-        return null;
-    }
-
-    @Override
-    public <R> XStream<R> flatMap(Function<? super Double, ? extends Stream<? extends R>> mapper) {
-        return null;
-    }
-
-    @Override
-    public XIntStream flatMapToInt(Function<? super Double, ? extends IntStream> mapper) {
-        return null;
-    }
-
-    @Override
-    public XLongStream flatMapToLong(Function<? super Double, ? extends LongStream> mapper) {
-        return null;
-    }
-
-    @Override
-    public XDoubleStream flatMapToDouble(Function<? super Double, ? extends DoubleStream> mapper) {
-        return null;
+    public LongStream mapToLong(DoubleToLongFunction mapper) {
+        return stream.mapToLong(mapper);
     }
 
     @Override
     public XDoubleStream distinct() {
-        return null;
+        return wrap(stream.distinct());
     }
 
     @Override
     public XDoubleStream sorted() {
-        return null;
+        return wrap(stream.sorted());
     }
 
     @Override
     public XDoubleStream sorted(Comparator<? super Double> comparator) {
-        return null;
+        return wrap(boxed().sorted(comparator).mapToDouble(x -> x));
     }
 
     @Override
     public XDoubleStream peek(Consumer<? super Double> action) {
-        return null;
+        return wrap(boxed().peek(action).mapToDouble(x -> x));
     }
 
     @Override
     public XDoubleStream limit(long maxSize) {
-        return null;
+        return wrap(stream.limit(maxSize));
     }
 
     @Override
     public XDoubleStream skip(long n) {
-        return null;
+        return wrap(stream.skip(n));
     }
 
     @Override
     public void forEach(Consumer<? super Double> action) {
-
+        boxed().forEach(action);
     }
 
     @Override
     public void forEachOrdered(Consumer<? super Double> action) {
-
+        boxed().forEachOrdered(action);
     }
 
-    @Override
-    public <A> A[] toArray(IntFunction<A[]> generator) {
-        return null;
-    }
-
-    @Override
-    public Double reduce(Double identity, BinaryOperator<Double> accumulator) {
-        return null;
-    }
-
-    @Override
-    public Optional<Double> reduce(BinaryOperator<Double> accumulator) {
-        return null;
-    }
-
-    @Override
-    public <U> U reduce(U identity, BiFunction<U, ? super Double, U> accumulator, BinaryOperator<U> combiner) {
-        return null;
-    }
-
-    @Override
-    public <R> R collect(Supplier<R> supplier, BiConsumer<R, ? super Double> accumulator, BiConsumer<R, R> combiner) {
-        return null;
-    }
-
-    @Override
-    public <R, A> R collect(Collector<? super Double, A, R> collector) {
-        return null;
-    }
 
     @Override
     public long count() {
-        return 0;
-    }
-
-    @Override
-    public boolean anyMatch(Predicate<? super Double> predicate) {
-        return false;
-    }
-
-    @Override
-    public boolean allMatch(Predicate<? super Double> predicate) {
-        return false;
-    }
-
-    @Override
-    public boolean noneMatch(Predicate<? super Double> predicate) {
-        return false;
+        return stream.count();
     }
 
     @Override
     public boolean isParallel() {
-        return false;
+        return stream.isParallel();
     }
 
     @Override
     public XDoubleStream sequential() {
-        return null;
+        return wrap(stream.sequential());
     }
 
     @Override
     public XDoubleStream parallel() {
-        return null;
+        return wrap(stream.parallel());
     }
 
     @Override
     public XDoubleStream unordered() {
-        return null;
+        return wrap(stream.unordered());
     }
 
     @Override
     public XDoubleStream onClose(Runnable closeHandler) {
-        return null;
+        return wrap(stream.onClose(closeHandler));
     }
 
     @Override
     public void close() {
-
+        stream.close();
     }
 }
