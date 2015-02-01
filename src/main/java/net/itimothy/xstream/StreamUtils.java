@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 /**
  * Creates xstream instances
  */
-public class StreamFactory {
+public class StreamUtils {
     public static XIntStream xstream(int... items) {
         return XIntStream.wrap(Arrays.stream(items));
     }

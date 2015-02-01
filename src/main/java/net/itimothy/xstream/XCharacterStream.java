@@ -34,6 +34,10 @@ public class XCharacterStream extends XPrimitiveBaseStream<Character, XCharacter
     }
     
     private static IntStream toIntStream(String string) {
+        if (string == null || string == "") {
+            return Arrays.stream(new int[0]);
+        }
+        
         char[] chars = string.toCharArray();
         int[] ints = new int[chars.length];
 
@@ -42,6 +46,10 @@ public class XCharacterStream extends XPrimitiveBaseStream<Character, XCharacter
         }
 
         return Arrays.stream(ints);        
+    }
+    
+    public XCharacterStream union(String other) {
+        return union(wrap(other));
     }
 
     @Override

@@ -53,7 +53,7 @@ class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
 
     @Override
     protected XStream<T> createInstance(Stream<T> stream) {
-        return StreamFactory.xstream(stream);
+        return StreamUtils.xstream(stream);
     }
 
     @Override
