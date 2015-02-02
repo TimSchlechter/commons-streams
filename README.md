@@ -91,7 +91,7 @@ xstream(1,2).difference(2,3)
 
 ##### .intersect()
 ```java
-xstream(1,2).union(2,3)
+xstream(1,2).intersect(2,3)
 // → [2]
 ```
 
