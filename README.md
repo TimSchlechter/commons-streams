@@ -60,12 +60,12 @@ xstream(women).anyMatch(ann);
 
 xstream(women).without(ann).anyMatch(ann)
 // → false
-```
 
-#### .intersect()
+#### [.intersect()](http://en.wikipedia.org/wiki/Intersection_(set_theory))
 ```java
 xstream(1,2).union(2,3)
 // → [2]
+```
 
 ### .sorted()
 ```java
@@ -79,7 +79,7 @@ xstream(people).sorted(p -> p.getAge())
 // → [carol,bob,ann]
 ```
 
-#### .union()
+#### [.union()](http://en.wikipedia.org/wiki/Union_(set_theory))
 ```java
 xstream(1,2).union(2,3)
 // → [1,2,3]

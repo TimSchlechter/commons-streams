@@ -59,11 +59,11 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
      *
      * @param other a stream whose distinct elements form the second set for the intersection.
      * @return the set intersection of two sequences by using the default equality comparer.
-     * @implNote This function lazy evaluates this instance, but materializes {@other}
+     * @implNote This function lazy evaluates this stream, but materializes {@other}
      */
     public X intersect(X other) {
         List<T> otherMaterialized = other.toList();
-        return filter(otherMaterialized::contains);
+        return filter(otherMaterialized::contains).distinct();
     }
 
     /**
@@ -71,7 +71,7 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
      *
      * @param other a collection whose distinct elements form the second set for the intersection.
      * @return the set intersection of two sequences by using the default equality comparer.
-     * @implNote This function lazy evaluates this instance, but materializes {@other}
+     * @implNote This function lazy evaluates this stream, but materializes {@other}
      */
     public X intersect(Collection<T> other) {
         return intersect(createInstance(other.stream()));

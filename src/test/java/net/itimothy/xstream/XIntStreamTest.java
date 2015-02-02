@@ -7,12 +7,12 @@ import static org.junit.Assert.*;
 
 public class XIntStreamTest extends BaseTest {
     @Test
-    public void anyMatch_objectInStream_shouldReturnTrue() {
+    public void anyMatch_valueInStream_shouldReturnTrue() {
         assertTrue(xstream(1, 2, 3).anyMatch(1));
     }
 
     @Test
-    public void anyMatch_objectNotInStream_shouldReturnFalse() {
+    public void anyMatch_valueNotInStream_shouldReturnFalse() {
         assertFalse(xstream(1, 2, 3).anyMatch(4));
     }
 
@@ -59,7 +59,15 @@ public class XIntStreamTest extends BaseTest {
     }
 
     @Test
-    public void without_objectInStream_shouldReturnAllOtherObjects() {
+    public void intersect_sameValue_shouldReturnDistinctValues() {
+        assertXStream(
+            xstream(1),
+            xstream(1, 1).intersect(xstream(1))
+        );
+    }
+
+    @Test
+    public void without_valueInStream_shouldReturnAllOtherValues() {
         assertXStream(
             xstream(1, 2),
             xstream(1, 2, 3).without(3)
