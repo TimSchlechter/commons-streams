@@ -35,12 +35,13 @@ xstream(bob.getName()).union(carol.getName()).toList();
 // → ['B','o','b',c','a','r','l']
 
 ```
-### Operations
 Streams created by xstream are 100% compatible with the [Java Streams
 API](http://docs.oracle.com/javase/8/docs/api/java/util/stream/package-
 summary.html). It currently extends the API with the following operations.
 
-#### .any()
+### Misc operations
+
+##### .any()
 ```java
 xstream(1).any();
 // → true
@@ -49,7 +50,7 @@ xstream(1).without(1).any()
 // → false
 ```
 
-#### .anyMatch()
+##### .anyMatch()
 ```java
 Person ann = new Person("Ann", 30);
 Person carol = new Person("Carol", 10);
@@ -60,14 +61,9 @@ xstream(women).anyMatch(ann);
 
 xstream(women).without(ann).anyMatch(ann)
 // → false
-
-#### [.intersect()](http://en.wikipedia.org/wiki/Intersection_(set_theory))
-```java
-xstream(1,2).union(2,3)
-// → [2]
 ```
 
-### .sorted()
+##### .sorted()
 ```java
 Person ann = new Person("Ann", 30);
 Person bob = new Person("Bob", 20);
@@ -79,24 +75,45 @@ xstream(people).sorted(p -> p.getAge())
 // → [carol,bob,ann]
 ```
 
-#### [.union()](http://en.wikipedia.org/wiki/Union_(set_theory))
+##### .without()
+```java
+xstream(1,2).without(2)
+// → 1
+```
+
+### Set operations
+
+##### .difference()
+```java
+xstream(1,2).difference(2,3)
+// → [1]
+```
+
+##### .intersect()
+```java
+xstream(1,2).union(2,3)
+// → [2]
+```
+
+##### .union()
 ```java
 xstream(1,2).union(2,3)
 // → [1,2,3]
 ```
 
-#### .toList()
+### Collector operations
+
+##### .toList()
 ```java
 // TODO: add example
 ```
 
-#### .toMap()
+##### .toMap()
 ```java
 // TODO: add example
 ```
 
-#### .without()
+##### .toSet()
 ```java
-xstream(1,2).without(2)
-// → 1
+// TODO: add example
 ```

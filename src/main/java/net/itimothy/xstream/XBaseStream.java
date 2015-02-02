@@ -78,6 +78,29 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
     }
 
     /**
+     * Produces the set difference of two sequences by using the default equality comparer.
+     *
+     * @param other a stream whose distinct elements form the second set for the intersection.
+     * @return the set difference of two sequences by using the default equality comparer.
+     * @implNote This function lazy evaluates this stream, but materializes {@other}
+     */
+    public X difference(X other) {
+        List<T> otherMaterialized = other.toList();
+        return filter(o -> !otherMaterialized.contains(o)).distinct();
+    }
+
+    /**
+     * Produces the set difference of two sequences by using the default equality comparer.
+     *
+     * @param other a collection whose distinct elements form the second set for the intersection.
+     * @return the set difference of two sequences by using the default equality comparer.
+     * @implNote This function lazy evaluates this stream, but materializes {@other}
+     */
+    public X difference(Collection<T> other) {
+        return difference(createInstance(other.stream()));
+    }
+
+    /**
      * Returns a stream consisting of the elements of this stream, sorted by comparing the value provided by the
      * given{@keyExtractor}
      *
@@ -133,6 +156,15 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
         Function<? super T, ? extends K> keyMapper,
         Function<? super T, ? extends U> valueMapper) {
         return collect(Collectors.toMap(keyMapper, valueMapper));
+    }
+
+    /**
+     * Accumulates the input elements into a new {@code Set}
+     *
+     * @return the input elements into a new {@code Set}
+     */
+    public Set<T> toSet() {
+        return collect(Collectors.toSet());
     }
 
     protected abstract X createInstance(Stream<T> stream);
