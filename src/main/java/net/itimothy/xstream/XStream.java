@@ -37,6 +37,11 @@ class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
     }
 
     @Override
+    public Optional<T> first() {
+        return findFirst();
+    }
+    
+    @Override
     public Optional<T> findAny() {
         return stream.findAny();
     }

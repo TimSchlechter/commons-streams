@@ -1,9 +1,6 @@
 package net.itimothy.xstream;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
@@ -59,12 +56,17 @@ public class XCharacterStream extends XPrimitiveBaseStream<Character, XCharacter
 
     @Override
     public XStream<Character> boxed() {
-        return stream.boxed().map(i -> new Character((char)i.intValue()));
+        return stream.boxed().map(i -> new Character((char) i.intValue()));
     }
 
     @Override
     public XCharacterStream filter(Predicate<? super Character> predicate) {
         return wrap(boxed().filter(predicate));
+    }
+
+    @Override
+    public Optional<Character> first() {
+        return boxed().findFirst();
     }
 
     @Override

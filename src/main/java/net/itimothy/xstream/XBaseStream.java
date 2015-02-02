@@ -7,50 +7,128 @@ import java.util.stream.*;
 import static java.util.stream.Stream.concat;
 
 /**
- * Base class for all X*Stream classes. Implements the extensions on the Streams API
- * by using the implementations of the standard API provided by the derived classes.
+ * Base class for all X*Stream classes. Implements the extensions on the Streams API by using the implementations of the
+ * standard API provided by the derived classes.
  *
  * @param <T> the type of the stream elements
  * @param <X> the type of of the stream implementing XBaseStream
  */
-abstract class XBaseStream<T extends Object, X extends XBaseStream<T, X>> {
+abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
 
-    public boolean contains(T item) {
-        return anyMatch(i -> i.equals(item));
+    /**
+     * Determines whether a sequence contains a specified element.
+     *
+     * @param object the object to test
+     * @return whether a sequence contains a specified element.
+     */
+    public boolean anyMatch(T object) {
+        return anyMatch(i -> i.equals(object));
     }
 
+    /**
+     * Determines whether a sequence contains any elements.
+     *
+     * @return whether a sequence contains any elements.
+     */
     public boolean any() {
-        return anyMatch(t -> t == t);
+        return first().isPresent();
     }
 
+    /**
+     * Produces the set union of two sequences by using the default equality comparer.
+     *
+     * @param other a stream whose distinct elements form the second set for the union.
+     * @return the set union of two sequences by using the default equality comparer.
+     */
     public X union(X other) {
         return createInstance(concat(boxed(), other.boxed()).distinct());
     }
 
+    /**
+     * Produces the set union of two sequences by using the default equality comparer.
+     *
+     * @param other a collection whose distinct elements form the second set for the union.
+     * @return the set union of two sequences by using the default equality comparer.
+     */
     public X union(Collection<T> other) {
-        return createInstance(concat(boxed(), other.stream()).distinct());
+        return union(createInstance(other.stream()));
     }
 
-    public X union(T... other) {
-        return createInstance(concat(boxed(), Arrays.stream(other)).distinct());
+    /**
+     * Produces the set intersection of two sequences by using the default equality comparer.
+     *
+     * @param other a stream whose distinct elements form the second set for the intersection.
+     * @return the set intersection of two sequences by using the default equality comparer.
+     * @implNote This function lazy evaluates this instance, but materializes {@other}
+     */
+    public X intersect(X other) {
+        List<T> otherMaterialized = other.toList();
+        return filter(otherMaterialized::contains);
     }
 
+    /**
+     * Produces the set intersection of two sequences by using the default equality comparer.
+     *
+     * @param other a collection whose distinct elements form the second set for the intersection.
+     * @return the set intersection of two sequences by using the default equality comparer.
+     * @implNote This function lazy evaluates this instance, but materializes {@other}
+     */
+    public X intersect(Collection<T> other) {
+        return intersect(createInstance(other.stream()));
+    }
+
+    /**
+     * Returns a stream consisting of the elements of this stream, sorted by comparing the value provided by the
+     * given{@keyExtractor}
+     *
+     * @param keyExtractor the function used to extract the {@link Comparable} sort key
+     */
     public <U extends Comparable<? super U>> X sorted(Function<? super T, ? extends U> keyExtractor) {
         return sorted(Comparator.comparing(keyExtractor));
     }
 
-    public X without(T item) {
-        return filter(i -> !i.equals(item));
+    /**
+     * Returns a stream consisting of the elements of this stream without the given {@object}
+     *
+     * @param object the object to exclude
+     */
+    public X without(T object) {
+        return filter(i -> !i.equals(object));
     }
 
+    /**
+     * Accumulates the input elements into a new {@code List}
+     *
+     * @return the input elements into a new {@code List}
+     */
     public List<T> toList() {
         return collect(Collectors.toList());
     }
 
+    /**
+     * Accumulates elements into a {@code Map} whose keys are the result of applying the provided {@keyMapper} function
+     * to the input elements. The values are the elements.
+     *
+     * @param keyMapper a mapping function to produce keys
+     * @param <K>       the output type of the key mapping function
+     * @return the elements into a {@code Map} whose keys are the result of applying the provided {@keyMapper} function
+     * to the input elements. The values are the elements
+     */
     public <K> Map<K, T> toMap(Function<? super T, ? extends K> keyMapper) {
         return toMap(keyMapper, x -> x);
     }
 
+    /**
+     * Accumulates elements into a {@code Map} whose keys and values are the result of applying the provided mapping
+     * functions to the input elements.
+     *
+     * @param <K>         the output type of the key mapping function
+     * @param <U>         the output type of the value mapping function
+     * @param keyMapper   a mapping function to produce keys
+     * @param valueMapper a mapping function to produce values
+     * @return the elements into a {@code Map} whose keys and values are the result of applying mapping functions to the
+     * input elements
+     */
     public <K, U> Map<K, U> toMap(
         Function<? super T, ? extends K> keyMapper,
         Function<? super T, ? extends U> valueMapper) {
@@ -78,6 +156,8 @@ abstract class XBaseStream<T extends Object, X extends XBaseStream<T, X>> {
     public abstract XLongStream flatMapToLong(Function<? super T, ? extends LongStream> mapper);
 
     public abstract XDoubleStream flatMapToDouble(Function<? super T, ? extends DoubleStream> mapper);
+
+    protected abstract Optional<T> first();
 
     public abstract X distinct();
 

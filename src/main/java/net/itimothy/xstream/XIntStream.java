@@ -126,6 +126,12 @@ class XIntStream extends XPrimitiveBaseStream<Integer, XIntStream> implements In
     }
 
     @Override
+    public Optional<Integer> first() {
+        OptionalInt val = findFirst();
+        return val.isPresent() ? Optional.ofNullable(val.getAsInt()) : Optional.ofNullable(null);
+    }
+
+    @Override
     public OptionalInt findAny() {
         return stream.findAny();
     }

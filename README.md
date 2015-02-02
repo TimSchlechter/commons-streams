@@ -25,10 +25,10 @@ List<Person> people = xstream(men).union(women).toList();
 xstream(people).sorted(p -> p.getAge()).toList();
 // → [carol,bob,ann]
 
-xstream(people).without(bob).contains(bob);
+xstream(people).without(bob).anyMatch(bob);
 // → false
 
-xstream(bob.getName()).contains('b');
+xstream(bob.getName()).anyMatch('b');
 // → true
 
 xstream(bob.getName()).union(carol.getName()).toList();
@@ -42,50 +42,47 @@ summary.html). It currently extends the API with the following operations.
 
 #### .any()
 ```java
-Person bob = new Person("Bob", 20);
-Person[] men = {bob};
-
-xstream(men).any();
+xstream(1).any();
 // → true
 
-xstream(men).without(bob).any()
+xstream(1).without(1).any()
 // → false
 ```
 
-#### .contains()
+#### .anyMatch()
 ```java
 Person ann = new Person("Ann", 30);
 Person carol = new Person("Carol", 10);
 Person[] women = {ann, carol};
 
-xstream(women).contains(ann);
+xstream(women).anyMatch(ann);
 // → true
 
-xstream(women).without(ann).contains(ann)
+xstream(women).without(ann).anyMatch(ann)
 // → false
 ```
+
+#### .intersect()
+```java
+xstream(1,2).union(2,3)
+// → [2]
 
 ### .sorted()
 ```java
 Person ann = new Person("Ann", 30);
+Person bob = new Person("Bob", 20);
 Person carol = new Person("Carol", 10);
-Person[] women = {ann, carol};
 
-xstream(people).sorted(p -> p.getAge()).toList()
+Person[] people = {ann, bob, carol};
+
+xstream(people).sorted(p -> p.getAge())
 // → [carol,bob,ann]
 ```
 
 #### .union()
 ```java
-Person ann = new Person("Ann", 30);
-Person bob = new Person("Bob", 20);
-Person carol = new Person("Carol", 10);
-
-Person[] men = {bob};
-Person[] women = {ann, carol};
-
-people = xstream(men).union(women).toList();
-// → [bob,ann,carol]
+xstream(1,2).union(2,3)
+// → [1,2,3]
 ```
 
 #### .toList()
@@ -100,9 +97,6 @@ people = xstream(men).union(women).toList();
 
 #### .without()
 ```java
-Person bob = new Person("Bob", 20);
-Person[] men = {bob};
-
-xstream(men).without(bob).any()
-// → false
+xstream(1,2).without(2)
+// → 1
 ```

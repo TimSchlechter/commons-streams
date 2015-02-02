@@ -116,6 +116,12 @@ class XDoubleStream extends XPrimitiveBaseStream<Double, XDoubleStream> implemen
     }
 
     @Override
+    public Optional<Double> first() {
+        OptionalDouble val = findFirst();
+        return val.isPresent() ? Optional.ofNullable(val.getAsDouble()) : Optional.ofNullable(null);
+    }
+
+    @Override
     public OptionalDouble findAny() {
         return stream.findAny();
     }

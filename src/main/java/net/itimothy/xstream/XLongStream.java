@@ -121,6 +121,12 @@ class XLongStream extends XPrimitiveBaseStream<Long, XLongStream> implements Lon
     }
 
     @Override
+    public Optional<Long> first() {
+        OptionalLong val = findFirst();
+        return val.isPresent() ? Optional.ofNullable(val.getAsLong()) : Optional.ofNullable(null);
+    }
+
+    @Override
     public OptionalLong findAny() {
         return stream.findAny();
     }
