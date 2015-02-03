@@ -3,11 +3,11 @@ A lightweight wrapper around the [Java Streams
 API](http://docs.oracle.com/javase/8/docs/api/java/util/stream/package-
 summary.html).
 
-### Goals:
-  - Make common operations on collections less verbose
-  - Strings as streams of characters
-  - 100% compatible with the Streams API.
-
+### Features
+  - 100% compatible with the Java Streams API
+  - Extends streams with common used operations
+  - String as streams of characters
+ 
 ### Example usages
 ```java
 import static net.itimothy.xstream.StreamUtils.xstream;
