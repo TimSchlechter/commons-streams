@@ -36,8 +36,7 @@ xstream(bob.getName()).union(carol.getName()).toList();
 
 ```
 Streams created by xstream are 100% compatible with the [Java Streams
-API](http://docs.oracle.com/javase/8/docs/api/java/util/stream/package-
-summary.html). It currently extends the API with the following operations.
+API](http://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html). It currently extends the API with the following operations.
 
 ### Misc operations
 
