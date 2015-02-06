@@ -9,7 +9,7 @@ summary.html).
  
 ### Example usages
 ```java
-import static net.itimothy.commons.streams.StreamUtils.stream;
+import static net.itimothy.commons.streams.StreamUtils.*;
 
 Person ann = new Person("Ann", 30);
 Person bob = new Person("Bob", 20);
@@ -48,19 +48,15 @@ API](http://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.h
 
 ##### .any()
 ```java
-stream(1).any();
+stream(men).any();
 // → true
 
-stream(1).without(1).any()
+stream(men).without(bob).any()
 // → false
 ```
 
 ##### .anyMatch()
 ```java
-Person ann = new Person("Ann", 30);
-Person carol = new Person("Carol", 10);
-Person[] women = {ann, carol};
-
 stream(women).anyMatch(ann);
 // → true
 
@@ -70,12 +66,6 @@ stream(women).without(ann).anyMatch(ann)
 
 ##### .findFirst(Predicate&lt;T&gt;)
 ```java
-Person ann = new Person("Ann", 30);
-Person bob = new Person("Bob", 20);
-Person carol = new Person("Carol", 10);
-
-Person[] people = {ann, bob, carol};
-
 stream(people).findFirst(p -> p.getName() == "Bob").get();
 // → bob
 
@@ -85,12 +75,6 @@ stream(people).findFirst(p -> p.getName() == "John").isPresent();
 
 ##### .findFirstOrDefault(Predicate&lt;T&gt;, T defaultValue)
 ```java
-Person ann = new Person("Ann", 30);
-Person bob = new Person("Bob", 20);
-Person carol = new Person("Carol", 10);
-
-Person[] people = {ann, bob, carol};
-
 stream(people).findFirstOrDefault(p -> p.getName() == "Bob", carol);
 // → bob
 
@@ -100,12 +84,6 @@ stream(people).findFirstOrDefault(p -> p.getName() == "John", carol);
 
 ##### .findFirstOrNull(Predicate&lt;T&gt;)
 ```java
-Person ann = new Person("Ann", 30);
-Person bob = new Person("Bob", 20);
-Person carol = new Person("Carol", 10);
-
-Person[] people = {ann, bob, carol};
-
 stream(people).findFirstOrNull(p -> p.getName() == "Bob");
 // → bob
 
@@ -113,42 +91,54 @@ stream(people).findFirstOrNull(p -> p.getName() == "John");
 // → null
 ```
 
+##### .flatten()
+```java
+Node root = new Node("root", asList(
+    new Node("1"),
+    new Node("2", asList(
+        new Node("2.1"),
+        new Node("2.2", asList(
+            new Node("2.2.1")
+        ))
+    ))
+));
+
+stream(root)
+    .flatten(n -> stream(n.getChildren()))
+    .map(n -> n.getName())
+// → ["1", "2", "2.1", "2.2", "2.2.1"]
+```
+
 ##### .sorted()
 ```java
-Person ann = new Person("Ann", 30);
-Person bob = new Person("Bob", 20);
-Person carol = new Person("Carol", 10);
-
-Person[] people = {ann, bob, carol};
-
 stream(people).sorted(p -> p.getAge())
 // → [carol,bob,ann]
 ```
 
 ##### .without()
 ```java
-stream(1,2).without(2)
-// → 1
+stream(people).without(bob)
+// → [ann, carol]
 ```
 
 ### Set operations
 
 ##### .difference()
 ```java
-stream(1,2).difference(asList(2,3))
-// → [1]
+stream(ann, bob).difference(asList(bob, carol))
+// → [ann]
 ```
 
 ##### .intersect()
 ```java
-stream(1,2).intersect(asList(2,3))
-// → [2]
+stream(ann, bob).intersect(asList(bob, carol))
+// → [bob]
 ```
 
 ##### .union()
 ```java
-stream(1,2).union(stream(2,3))
-// → [1,2,3]
+stream(ann, bob).union(stream(bob, carol))
+// → [ann,bob,carol]
 ```
 
 ### Collector operations

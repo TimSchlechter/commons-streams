@@ -14,7 +14,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XIntStream} for the array
      */
-    public static XIntStream stream(int... items) {
+    public static XIntStream stream(int[] items) {
         return XIntStream.wrap(Arrays.stream(items));
     }
 
@@ -24,7 +24,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XLongStream} for the array
      */
-    public static XLongStream stream(long... items) {
+    public static XLongStream stream(long[] items) {
         return XLongStream.wrap(Arrays.stream(items));
     }
 
@@ -34,7 +34,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XDoubleStream} for the array
      */
-    public static XDoubleStream stream(double... items) {
+    public static XDoubleStream stream(double[] items) {
         return XDoubleStream.wrap(Arrays.stream(items));
     }
 
@@ -54,7 +54,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XBaseStream} for the array
      */
-    public static <T> XBaseStream<T, XStream<T>> stream(T[] items) {
+    public static <T> XBaseStream<T, XStream<T>> stream(T... items) {
         return stream(Arrays.stream(items));
     }
 
@@ -84,7 +84,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XIntStream} for the array
      */
-    public static XIntStream parallelStream(int... items) {
+    public static XIntStream parallelStream(int[] items) {
         return stream(items).parallel();
     }
 
@@ -94,7 +94,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XLongStream} for the array
      */
-    public static XLongStream parallelStream(long... items) {
+    public static XLongStream parallelStream(long[] items) {
         return stream(items).parallel();
     }
 
@@ -104,7 +104,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XDoubleStream} for the array
      */
-    public static XDoubleStream parallelStream(double... items) {
+    public static XDoubleStream parallelStream(double[] items) {
         return stream(items).parallel();
     }
 
@@ -124,7 +124,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XBaseStream} for the array
      */
-    public static <T> XBaseStream<T, XStream<T>> parallelStream(T[] items) {
+    public static <T> XBaseStream<T, XStream<T>> parallelStream(T... items) {
         return stream(items).parallel();
     }
 
@@ -154,7 +154,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XIntStream} for the array
      */
-    public static XIntStream unorderedStream(int... items) {
+    public static XIntStream unorderedStream(int[] items) {
         return stream(items).unordered();
     }
 
@@ -164,7 +164,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XLongStream} for the array
      */
-    public static XLongStream unorderedStream(long... items) {
+    public static XLongStream unorderedStream(long[] items) {
         return stream(items).unordered();
     }
 
@@ -174,7 +174,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XDoubleStream} for the array
      */
-    public static XDoubleStream unorderedStream(double... items) {
+    public static XDoubleStream unorderedStream(double[] items) {
         return stream(items).unordered();
     }
 
@@ -194,7 +194,7 @@ public class StreamUtils {
      * @param items the array, assumed to be unmodified during use
      * @return an {@code XBaseStream} for the array
      */
-    public static <T> XBaseStream<T, XStream<T>> unorderedStream(T[] items) {
+    public static <T> XBaseStream<T, XStream<T>> unorderedStream(T... items) {
         return stream(items).unordered();
     }
 

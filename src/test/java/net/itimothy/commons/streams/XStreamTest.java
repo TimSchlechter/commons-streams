@@ -4,19 +4,20 @@ import org.junit.Test;
 
 import static java.util.Arrays.asList;
 import static net.itimothy.commons.streams.StreamUtils.stream;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class XStreamTest extends BaseTest {
     @Test
     public void union_emptyStreams_shouldReturnNoValues() {
         assertEquals(
             asList(),
-            stream().union(stream()).toList()
+            stream().union(stream(asList())).toList()
         );
     }
 
     @Test
-    public void sorted() {
+    public void sorted_test() {
         assertXStream(
             Person.getSortedByName(),
             stream(Person.getAll()).sorted(p -> p.getName())
@@ -105,6 +106,16 @@ public class XStreamTest extends BaseTest {
             null,
             stream(Person.getAll())
                 .findFirstOrNull(p -> p.getName() == "non-matching-name")
+        );
+    }
+
+    @Test
+    public void flatten_test() {
+        assertXStream(
+            asList("root","1","2","2.1","2.2","2.2.1","2.3","2.3.1","2.3.2"),
+            stream(Node.SimpleTree)
+                .flatten(n -> stream(n.getChildren()))
+                .map(n -> n.getName())
         );
     }
 }

@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Stream.concat;
 
 /**
@@ -186,6 +187,27 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
     public T findFirstOrNull(Predicate<T> predicate) {
         Optional<T> result = findFirst(predicate);
         return result.isPresent() ? result.get() : null;
+    }
+
+    /**
+     * Recursive {@link XBaseStream#flatMap(java.util.function.Function)}
+     *
+     * @param childrenMapper a <a href="package-summary.html#NonInterference">non-interfering</a>, <a
+     *                       href="package-summary.html#Statelessness">stateless</a> function to apply to each element
+     *                       which produces a stream of new values
+     * @return the new stream
+     */
+    public XStream<T> flatten(Function<? super T, ? extends XStream<T>> childrenMapper) {
+        XStream<T> result = flatMap(t -> {
+            XStream<T> thisStream = StreamUtils.stream(asList(t));
+            XStream<T> childStream = childrenMapper.apply(t);
+
+            return childStream.findFirst().isPresent()
+                ? thisStream.union(childrenMapper.apply(t).flatten(childrenMapper))
+                : thisStream;
+        });
+
+        return result;
     }
 
     protected abstract X createInstance(Stream<T> stream);
