@@ -1,4 +1,4 @@
-package net.itimothy.xstream;
+package net.itimothy.commons.streams;
 
 import java.util.*;
 import java.util.function.Consumer;

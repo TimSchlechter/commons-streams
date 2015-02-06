@@ -1,42 +1,42 @@
-package net.itimothy.xstream;
+package net.itimothy.commons.streams;
 
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
-import static net.itimothy.xstream.StreamUtils.xstream;
+import static net.itimothy.commons.streams.StreamUtils.stream;
 import static org.junit.Assert.*;
 
 public class XCharacterStreamTest extends BaseTest {
     @Test
     public void any_null_shouldReturnFalse() {
-        assertFalse(xstream((String)null).any());
+        assertFalse(stream((String) null).any());
     }
 
     @Test
     public void any_emptyString_shouldReturnFalse() {
-        assertFalse(xstream("").any());
+        assertFalse(stream("").any());
     }
 
     @Test
     public void any_nonEmptyString_shouldReturnTrue() {
-        assertTrue(xstream("a").any());
+        assertTrue(stream("a").any());
     }
 
     @Test
     public void anyMatch_containsChar_shouldReturnTrue() {
-        assertTrue(xstream("abc").anyMatch('a'));
+        assertTrue(stream("abc").anyMatch('a'));
     }
 
     @Test
     public void anyMatch_notContainsChar_shouldReturnFalse() {
-        assertFalse(xstream("abc").anyMatch('d'));
+        assertFalse(stream("abc").anyMatch('d'));
     }
 
     @Test
     public void union_bobAndCarol_shouldReturnDistinctChars() {
         assertXStream(
             asList('B', 'o', 'b', 'C', 'a', 'r', 'l'),
-            xstream(Person.Bob.getName()).union(Person.Carol.getName())
+            stream(Person.Bob.getName()).union(Person.Carol.getName())
         );
     }
 }

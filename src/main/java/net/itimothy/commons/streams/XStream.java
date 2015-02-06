@@ -1,4 +1,4 @@
-package net.itimothy.xstream;
+package net.itimothy.commons.streams;
 
 import java.util.*;
 import java.util.function.*;
@@ -58,7 +58,7 @@ class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
 
     @Override
     protected XStream<T> createInstance(Stream<T> stream) {
-        return StreamUtils.xstream(stream);
+        return StreamUtils.stream(stream);
     }
 
     @Override

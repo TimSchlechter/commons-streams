@@ -1,4 +1,4 @@
-package net.itimothy.xstream;
+package net.itimothy.commons.streams;
 
 import java.util.ArrayList;
 import java.util.Collection;
