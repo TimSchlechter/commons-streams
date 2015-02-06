@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static java.util.Arrays.asList;
 import static net.itimothy.commons.streams.StreamUtils.stream;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class XStreamTest extends BaseTest {
     @Test
@@ -53,5 +53,22 @@ public class XStreamTest extends BaseTest {
         );
     }
 
+    @Test
+      public void findFirst_matchingPredicate_ShouldReturnPresentOptional() {
+        assertEquals(
+            Person.Bob,
+            stream(Person.getAll())
+                .findFirst(p -> p.getName() == Person.Bob.getName())
+                .get()
+        );
+    }
 
+    @Test
+    public void findFirst_nonMatchingPredicate_ShouldReturnNonPresentOptional() {
+        assertFalse(
+            stream(Person.getAll())
+                .findFirst(p -> p.getName() == "non-matching-name")
+                .isPresent()
+        );
+    }
 }

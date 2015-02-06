@@ -63,6 +63,18 @@ stream(women).without(ann).anyMatch(ann)
 // → false
 ```
 
+##### .findFirst(Predicate<T>)
+```java
+Person ann = new Person("Ann", 30);
+Person bob = new Person("Bob", 20);
+Person carol = new Person("Carol", 10);
+
+Person[] people = {ann, bob, carol};
+
+stream(people).findFirst(p -> p.getName() == "Bob").get();
+// → [bob]
+```
+
 ##### .sorted()
 ```java
 Person ann = new Person("Ann", 30);

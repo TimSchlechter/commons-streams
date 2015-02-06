@@ -141,6 +141,21 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
         return collect(Collectors.toSet());
     }
 
+    /**
+     * Returns an {@link Optional} describing the first element of this stream that match the given predicate, or an
+     * empty {@code Optional} if the stream is empty or no element matches.  If the stream has no encounter order, then
+     * any matching element may be returned.
+     * <p/>
+     * <p>This is a <a href="package-summary.html#StreamOps">short-circuiting terminal operation</a>.
+     *
+     * @return an {@code Optional} describing the first element of this stream that match the given predicate, or an
+     * empty {@code Optional} if the stream is empty or no element matches
+     * @throws NullPointerException if the element selected is null
+     */
+    public Optional<T> findFirst(Predicate<T> predicate) {
+        return filter(predicate).first();
+    }
+
     protected abstract X createInstance(Stream<T> stream);
 
     public abstract XStream<T> boxed();
