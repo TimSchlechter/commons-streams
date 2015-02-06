@@ -63,7 +63,7 @@ stream(women).without(ann).anyMatch(ann)
 // → false
 ```
 
-##### .findFirst(Predicate<T>)
+##### .findFirst(Predicate&lt;T&gt;)
 ```java
 Person ann = new Person("Ann", 30);
 Person bob = new Person("Bob", 20);
@@ -72,7 +72,40 @@ Person carol = new Person("Carol", 10);
 Person[] people = {ann, bob, carol};
 
 stream(people).findFirst(p -> p.getName() == "Bob").get();
-// → [bob]
+// → bob
+
+stream(people).findFirst(p -> p.getName() == "John").isPresent();
+// → false
+```
+
+##### .findFirstOrDefault(Predicate&lt;T&gt;, T defaultValue)
+```java
+Person ann = new Person("Ann", 30);
+Person bob = new Person("Bob", 20);
+Person carol = new Person("Carol", 10);
+
+Person[] people = {ann, bob, carol};
+
+stream(people).findFirstOrDefault(p -> p.getName() == "Bob", carol);
+// → bob
+
+stream(people).findFirstOrDefault(p -> p.getName() == "John", carol);
+// → carol
+```
+
+##### .findFirstOrNull(Predicate&lt;T&gt;)
+```java
+Person ann = new Person("Ann", 30);
+Person bob = new Person("Bob", 20);
+Person carol = new Person("Carol", 10);
+
+Person[] people = {ann, bob, carol};
+
+stream(people).findFirstOrNull(p -> p.getName() == "Bob");
+// → bob
+
+stream(people).findFirstOrNull(p -> p.getName() == "John");
+// → null
 ```
 
 ##### .sorted()
