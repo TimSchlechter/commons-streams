@@ -9,13 +9,13 @@ import static org.junit.Assert.assertTrue;
 
 public class XIntStreamTest extends BaseTest {
     @Test
-    public void anyMatch_valueInStream_shouldReturnTrue() {
-        assertTrue(stream(1, 2, 3).anyMatch(1));
+    public void contains_valueInStream_shouldReturnTrue() {
+        assertTrue(stream(1, 2, 3).contains(1));
     }
 
     @Test
-    public void anyMatch_valueNotInStream_shouldReturnFalse() {
-        assertFalse(stream(1, 2, 3).anyMatch(4));
+    public void contains_valueNotInStream_shouldReturnFalse() {
+        assertFalse(stream(1, 2, 3).contains(4));
     }
 
     @Test

@@ -24,12 +24,12 @@ public class XCharacterStreamTest extends BaseTest {
 
     @Test
     public void anyMatch_containsChar_shouldReturnTrue() {
-        assertTrue(stream("abc").anyMatch('a'));
+        assertTrue(stream("abc").contains('a'));
     }
 
     @Test
     public void anyMatch_notContainsChar_shouldReturnFalse() {
-        assertFalse(stream("abc").anyMatch('d'));
+        assertFalse(stream("abc").contains('d'));
     }
 
     @Test

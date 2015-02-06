@@ -22,7 +22,7 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
      * @param object the object to test
      * @return whether a sequence contains a specified element.
      */
-    public boolean anyMatch(T object) {
+    public boolean contains(T object) {
         return anyMatch(i -> i.equals(object));
     }
 

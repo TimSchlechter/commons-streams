@@ -24,10 +24,10 @@ List<Person> people = stream(men).union(women).toList();
 stream(people).sorted(p -> p.getAge()).toList();
 // → [carol,bob,ann]
 
-stream(people).without(bob).anyMatch(bob);
+stream(people).without(bob).contains(bob);
 // → false
 
-stream(bob.getName()).anyMatch('b');
+stream(bob.getName()).contains('b');
 // → true
 
 stream(bob.getName()).union(carol.getName()).toList();
@@ -55,12 +55,12 @@ stream(men).without(bob).any()
 // → false
 ```
 
-##### .anyMatch()
+##### .contains()
 ```java
-stream(women).anyMatch(ann);
+stream(women).contains(ann);
 // → true
 
-stream(women).without(ann).anyMatch(ann)
+stream(women).without(ann).contains(ann)
 // → false
 ```
 
