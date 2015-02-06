@@ -91,9 +91,14 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
      * @param object the object to exclude
      */
     public X without(T object) {
-        return filter(i -> !i.equals(object));
+        return without(i -> i.equals(object));
     }
 
+
+    public X without(Predicate<? super T> predicate) {
+        return filter(t -> !predicate.test(t));
+    }
+    
     /**
      * Accumulates the input elements into a new {@code List}
      *

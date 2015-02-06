@@ -119,6 +119,9 @@ stream(people).sorted(p -> p.getAge())
 ```java
 stream(people).without(bob)
 // → [ann, carol]
+
+stream(people).without(p -> p.getAge() > 25)
+// → [ann]
 ```
 
 ### Set operations

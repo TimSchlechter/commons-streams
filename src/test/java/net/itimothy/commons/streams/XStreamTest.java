@@ -55,6 +55,15 @@ public class XStreamTest extends BaseTest {
     }
 
     @Test
+    public void without_predicate_shouldReturnAllNonMatchingObjects() {
+        assertXStream(
+            stream(asList(Person.Ann)),
+            stream(asList(Person.Ann, Person.Bob, Person.Carol))
+                .without(p -> p.getAge() < 25)
+        );
+    }
+
+    @Test
       public void findFirst_matchingPredicate_ShouldReturnPresentOptional() {
         assertEquals(
             Person.Bob,
@@ -112,7 +121,7 @@ public class XStreamTest extends BaseTest {
     @Test
     public void flatten_test() {
         assertXStream(
-            asList("root","1","2","2.1","2.2","2.2.1","2.3","2.3.1","2.3.2"),
+            asList("root", "1", "2", "2.1", "2.2", "2.2.1", "2.3", "2.3.1", "2.3.2"),
             stream(Node.SimpleTree)
                 .flatten(n -> stream(n.getChildren()))
                 .map(n -> n.getName())
