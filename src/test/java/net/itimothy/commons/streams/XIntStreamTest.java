@@ -2,6 +2,7 @@ package net.itimothy.commons.streams;
 
 import org.junit.Test;
 
+import static java.util.Arrays.asList;
 import static net.itimothy.commons.streams.StreamUtils.stream;
 import static org.junit.Assert.*;
 
@@ -46,7 +47,7 @@ public class XIntStreamTest extends BaseTest {
     public void intersect_oneValueInBothStreams_shouldReturnOneValue() {
         assertXStream(
             stream(2),
-            stream(1, 2).intersect(stream(2, 3))
+            stream(1, 2).intersect(asList(2, 3))
         );
     }
 
@@ -54,7 +55,7 @@ public class XIntStreamTest extends BaseTest {
     public void intersect_noSharedValues_shouldReturnEmptyStream() {
         assertXStream(
             stream(),
-            stream(1, 2).intersect(stream(3, 4))
+            stream(1, 2).intersect(asList(3, 4))
         );
     }
 
@@ -62,7 +63,7 @@ public class XIntStreamTest extends BaseTest {
     public void intersect_sameValue_shouldReturnDistinctValues() {
         assertXStream(
             stream(1),
-            stream(1, 1).intersect(stream(1))
+            stream(1, 1).intersect(asList(1))
         );
     }
 
@@ -70,7 +71,7 @@ public class XIntStreamTest extends BaseTest {
     public void difference_oneValueInBothStreams_shouldReturnValuesOnlyInFirstStream() {
         assertXStream(
             stream(1),
-            stream(1, 2).difference(stream(2, 3))
+            stream(1, 2).difference(asList(2, 3))
         );
     }
 
@@ -78,7 +79,7 @@ public class XIntStreamTest extends BaseTest {
     public void difference_noSharedValues_shouldReturnAllValuesInFirstStream() {
         assertXStream(
             stream(1, 2),
-            stream(1, 2).difference(stream(3, 4))
+            stream(1, 2).difference(asList(3, 4))
         );
     }
 
@@ -86,7 +87,7 @@ public class XIntStreamTest extends BaseTest {
     public void difference_sameValue_shouldReturnDistinctValuesOnlyInFirstStream() {
         assertXStream(
             stream(1),
-            stream(1, 1, 2).difference(stream(2))
+            stream(1, 1, 2).difference(asList(2))
         );
     }
 

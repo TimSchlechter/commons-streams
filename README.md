@@ -85,19 +85,19 @@ stream(1,2).without(2)
 
 ##### .difference()
 ```java
-stream(1,2).difference(2,3)
+stream(1,2).difference(asList(2,3))
 // → [1]
 ```
 
 ##### .intersect()
 ```java
-stream(1,2).intersect(2,3)
+stream(1,2).intersect(asList(2,3))
 // → [2]
 ```
 
 ##### .union()
 ```java
-stream(1,2).union(2,3)
+stream(1,2).union(stream(2,3))
 // → [1,2,3]
 ```
 

@@ -57,36 +57,11 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
     /**
      * Produces the set intersection of two sequences by using the default equality comparer.
      *
-     * @param other a stream whose distinct elements form the second set for the intersection.
-     * @return the set intersection of two sequences by using the default equality comparer.
-     * @implNote This function lazy evaluates this stream, but materializes {@other}
-     */
-    public X intersect(X other) {
-        List<T> otherMaterialized = other.toList();
-        return filter(otherMaterialized::contains).distinct();
-    }
-
-    /**
-     * Produces the set intersection of two sequences by using the default equality comparer.
-     *
      * @param other a collection whose distinct elements form the second set for the intersection.
      * @return the set intersection of two sequences by using the default equality comparer.
-     * @implNote This function lazy evaluates this stream, but materializes {@other}
      */
     public X intersect(Collection<T> other) {
-        return intersect(createInstance(other.stream()));
-    }
-
-    /**
-     * Produces the set difference of two sequences by using the default equality comparer.
-     *
-     * @param other a stream whose distinct elements form the second set for the intersection.
-     * @return the set difference of two sequences by using the default equality comparer.
-     * @implNote This function lazy evaluates this stream, but materializes {@other}
-     */
-    public X difference(X other) {
-        List<T> otherMaterialized = other.toList();
-        return filter(o -> !otherMaterialized.contains(o)).distinct();
+        return filter(other::contains).distinct();
     }
 
     /**
@@ -94,10 +69,9 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
      *
      * @param other a collection whose distinct elements form the second set for the intersection.
      * @return the set difference of two sequences by using the default equality comparer.
-     * @implNote This function lazy evaluates this stream, but materializes {@other}
      */
     public X difference(Collection<T> other) {
-        return difference(createInstance(other.stream()));
+        return filter(o -> !other.contains(o)).distinct();
     }
 
     /**
