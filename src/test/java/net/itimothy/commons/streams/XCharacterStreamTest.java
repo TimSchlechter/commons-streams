@@ -8,8 +8,13 @@ import static org.junit.Assert.*;
 
 public class XCharacterStreamTest extends BaseTest {
     @Test
-    public void any_null_shouldReturnFalse() {
-        assertFalse(stream((String) null).any());
+    public void anyMatch_containsChar_shouldReturnTrue() {
+        assertTrue(stream("abc").contains('a'));
+    }
+
+    @Test
+    public void anyMatch_notContainsChar_shouldReturnFalse() {
+        assertFalse(stream("abc").contains('d'));
     }
 
     @Test
@@ -23,13 +28,8 @@ public class XCharacterStreamTest extends BaseTest {
     }
 
     @Test
-    public void anyMatch_containsChar_shouldReturnTrue() {
-        assertTrue(stream("abc").contains('a'));
-    }
-
-    @Test
-    public void anyMatch_notContainsChar_shouldReturnFalse() {
-        assertFalse(stream("abc").contains('d'));
+    public void any_null_shouldReturnFalse() {
+        assertFalse(stream((String) null).any());
     }
 
     @Test

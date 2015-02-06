@@ -7,12 +7,123 @@ import java.util.stream.*;
 class XLongStream extends XPrimitiveBaseStream<Long, XLongStream> implements LongStream {
     private final LongStream stream;
 
+    private XLongStream(LongStream stream) {
+        this.stream = stream;
+    }
+
     public static XLongStream wrap(LongStream stream) {
         return new XLongStream(stream);
     }
 
-    private XLongStream(LongStream stream) {
-        this.stream = stream;
+    @Override
+    public XStream<Long> boxed() {
+        return XStream.wrap(stream.boxed());
+    }
+
+    @Override
+    public void close() {
+        stream.close();
+    }
+
+    @Override
+    public long count() {
+        return stream.count();
+    }
+
+    @Override
+    protected XLongStream createInstance(Stream<Long> stream) {
+        return wrap(stream.mapToLong(x -> x));
+    }
+
+    @Override
+    public XLongStream distinct() {
+        return wrap(stream.distinct());
+    }
+
+    @Override
+    public XLongStream filter(Predicate<? super Long> predicate) {
+        return wrap(stream.filter(t -> predicate.test(t)));
+    }
+
+    @Override
+    public Optional<Long> first() {
+        OptionalLong val = findFirst();
+        return val.isPresent() ? Optional.ofNullable(val.getAsLong()) : Optional.ofNullable(null);
+    }
+
+    @Override
+    public void forEach(Consumer<? super Long> action) {
+        boxed().forEach(action);
+    }
+
+    @Override
+    public void forEachOrdered(Consumer<? super Long> action) {
+        boxed().forEachOrdered(action);
+    }
+
+    @Override
+    public boolean isParallel() {
+        return stream.isParallel();
+    }
+
+    @Override
+    public PrimitiveIterator.OfLong iterator() {
+        return stream.iterator();
+    }
+
+    @Override
+    public XLongStream limit(long maxSize) {
+        return wrap(stream.limit(maxSize));
+    }
+
+    @Override
+    public XIntStream mapToInt(ToIntFunction<? super Long> mapper) {
+        return XIntStream.wrap(stream.mapToInt(value -> mapper.applyAsInt(value)));
+    }
+
+    @Override
+    public XLongStream onClose(Runnable closeHandler) {
+        return wrap(stream.onClose(closeHandler));
+    }
+
+    @Override
+    public XLongStream parallel() {
+        return wrap(stream.parallel());
+    }
+
+    @Override
+    public XLongStream peek(Consumer<? super Long> action) {
+        return wrap(boxed().peek(action).mapToLong(x -> x));
+    }
+
+    @Override
+    public XLongStream sequential() {
+        return wrap(stream.sequential());
+    }
+
+    @Override
+    public XLongStream skip(long n) {
+        return wrap(stream.skip(n));
+    }
+
+    @Override
+    public XLongStream sorted() {
+        return wrap(stream.sorted());
+    }
+
+    @Override
+    public XLongStream sorted(Comparator<? super Long> comparator) {
+        return wrap(boxed().sorted(comparator).mapToLong(x -> x));
+    }
+
+    @Override
+    public Spliterator.OfLong spliterator() {
+        return stream.spliterator();
+    }
+
+    @Override
+    public XLongStream unordered() {
+        return wrap(stream.unordered());
     }
 
     @Override
@@ -28,6 +139,11 @@ class XLongStream extends XPrimitiveBaseStream<Long, XLongStream> implements Lon
     @Override
     public <U> Stream<U> mapToObj(LongFunction<? extends U> mapper) {
         return stream.mapToObj(mapper);
+    }
+
+    @Override
+    public XIntStream mapToInt(LongToIntFunction mapper) {
+        return XIntStream.wrap(stream.mapToInt(mapper));
     }
 
     @Override
@@ -121,12 +237,6 @@ class XLongStream extends XPrimitiveBaseStream<Long, XLongStream> implements Lon
     }
 
     @Override
-    public Optional<Long> first() {
-        OptionalLong val = findFirst();
-        return val.isPresent() ? Optional.ofNullable(val.getAsLong()) : Optional.ofNullable(null);
-    }
-
-    @Override
     public OptionalLong findAny() {
         return stream.findAny();
     }
@@ -134,116 +244,5 @@ class XLongStream extends XPrimitiveBaseStream<Long, XLongStream> implements Lon
     @Override
     public XDoubleStream asDoubleStream() {
         return XDoubleStream.wrap(stream.asDoubleStream());
-    }
-
-    @Override
-    public XStream<Long> boxed() {
-        return XStream.wrap(stream.boxed());
-    }
-
-    @Override
-    public PrimitiveIterator.OfLong iterator() {
-        return stream.iterator();
-    }
-
-    @Override
-    public Spliterator.OfLong spliterator() {
-        return stream.spliterator();
-    }
-
-    @Override
-    protected XLongStream createInstance(Stream<Long> stream) {
-        return wrap(stream.mapToLong(x -> x));
-    }
-
-    @Override
-    public XLongStream filter(Predicate<? super Long> predicate) {
-        return wrap(stream.filter(t -> predicate.test(t)));
-    }
-
-    @Override
-    public XIntStream mapToInt(ToIntFunction<? super Long> mapper) {
-        return XIntStream.wrap(stream.mapToInt(value -> mapper.applyAsInt(value)));
-    }
-
-    @Override
-    public XIntStream mapToInt(LongToIntFunction mapper) {
-        return XIntStream.wrap(stream.mapToInt(mapper));
-    }
-
-    @Override
-    public XLongStream distinct() {
-        return wrap(stream.distinct());
-    }
-
-    @Override
-    public XLongStream sorted() {
-        return wrap(stream.sorted());
-    }
-
-    @Override
-    public XLongStream sorted(Comparator<? super Long> comparator) {
-        return wrap(boxed().sorted(comparator).mapToLong(x -> x));
-    }
-
-    @Override
-    public XLongStream peek(Consumer<? super Long> action) {
-        return wrap(boxed().peek(action).mapToLong(x -> x));
-    }
-
-    @Override
-    public XLongStream limit(long maxSize) {
-        return wrap(stream.limit(maxSize));
-    }
-
-    @Override
-    public XLongStream skip(long n) {
-        return wrap(stream.skip(n));
-    }
-
-    @Override
-    public void forEach(Consumer<? super Long> action) {
-        boxed().forEach(action);
-    }
-
-    @Override
-    public void forEachOrdered(Consumer<? super Long> action) {
-        boxed().forEachOrdered(action);
-    }
-
-
-    @Override
-    public long count() {
-        return stream.count();
-    }
-
-    @Override
-    public boolean isParallel() {
-        return stream.isParallel();
-    }
-
-    @Override
-    public XLongStream sequential() {
-        return wrap(stream.sequential());
-    }
-
-    @Override
-    public XLongStream parallel() {
-        return wrap(stream.parallel());
-    }
-
-    @Override
-    public XLongStream unordered() {
-        return wrap(stream.unordered());
-    }
-
-    @Override
-    public XLongStream onClose(Runnable closeHandler) {
-        return wrap(stream.onClose(closeHandler));
-    }
-
-    @Override
-    public void close() {
-        stream.close();
     }
 }

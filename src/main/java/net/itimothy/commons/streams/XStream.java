@@ -6,14 +6,14 @@ import java.util.stream.*;
 
 class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
 
-    public static <T> XStream<T> wrap(Stream<T> stream) {
-        return new XStream(stream);
-    }
-    
     private final Stream<T> stream;
-
+    
     private XStream(Stream<T> stream) {
         this.stream = stream;
+    }
+
+    public static <T> XStream<T> wrap(Stream<T> stream) {
+        return new XStream(stream);
     }
 
     @Override
@@ -37,25 +37,10 @@ class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
     }
 
     @Override
-    public Optional<T> first() {
-        return findFirst();
-    }
-    
-    @Override
     public Optional<T> findAny() {
         return stream.findAny();
     }
-
-    @Override
-    public Iterator<T> iterator() {
-        return stream.iterator();
-    }
-
-    @Override
-    public Spliterator<T> spliterator() {
-        return stream.spliterator();
-    }
-
+    
     @Override
     protected XStream<T> createInstance(Stream<T> stream) {
         return StreamUtils.stream(stream);
@@ -109,6 +94,11 @@ class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
     @Override
     public XDoubleStream flatMapToDouble(Function<? super T, ? extends DoubleStream> mapper) {
         return XDoubleStream.wrap(stream.flatMapToDouble(mapper));
+    }
+
+    @Override
+    public Optional<T> first() {
+        return findFirst();
     }
 
     @Override
@@ -199,6 +189,16 @@ class XStream<T> extends XBaseStream<T, XStream<T>> implements Stream<T> {
     @Override
     public boolean noneMatch(Predicate<? super T> predicate) {
         return stream.noneMatch(predicate);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return stream.iterator();
+    }
+
+    @Override
+    public Spliterator<T> spliterator() {
+        return stream.spliterator();
     }
 
     @Override

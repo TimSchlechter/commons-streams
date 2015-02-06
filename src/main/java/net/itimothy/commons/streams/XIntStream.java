@@ -7,12 +7,123 @@ import java.util.stream.*;
 class XIntStream extends XPrimitiveBaseStream<Integer, XIntStream> implements IntStream {
     private final IntStream stream;
 
+    private XIntStream(IntStream stream) {
+        this.stream = stream;
+    }
+
     public static XIntStream wrap(IntStream stream) {
         return new XIntStream(stream);
     }
 
-    private XIntStream(IntStream stream) {
-        this.stream = stream;
+    @Override
+    public XStream<Integer> boxed() {
+        return XStream.wrap(stream.boxed());
+    }
+
+    @Override
+    public void close() {
+        stream.close();
+    }
+
+    @Override
+    public long count() {
+        return stream.count();
+    }
+
+    @Override
+    protected XIntStream createInstance(Stream<Integer> stream) {
+        return wrap(stream.mapToInt(x -> x));
+    }
+
+    @Override
+    public XIntStream distinct() {
+        return wrap(stream.distinct());
+    }
+
+    @Override
+    public XIntStream filter(Predicate<? super Integer> predicate) {
+        return wrap(stream.filter(t -> predicate.test(t)));
+    }
+
+    @Override
+    public Optional<Integer> first() {
+        OptionalInt val = findFirst();
+        return val.isPresent() ? Optional.ofNullable(val.getAsInt()) : Optional.ofNullable(null);
+    }
+
+    @Override
+    public void forEach(Consumer<? super Integer> action) {
+        boxed().forEach(action);
+    }
+
+    @Override
+    public void forEachOrdered(Consumer<? super Integer> action) {
+        boxed().forEachOrdered(action);
+    }
+
+    @Override
+    public boolean isParallel() {
+        return stream.isParallel();
+    }
+
+    @Override
+    public PrimitiveIterator.OfInt iterator() {
+        return stream.iterator();
+    }
+
+    @Override
+    public XIntStream limit(long maxSize) {
+        return wrap(stream.limit(maxSize));
+    }
+
+    @Override
+    public XIntStream mapToInt(ToIntFunction<? super Integer> mapper) {
+        return this;
+    }
+
+    @Override
+    public XIntStream onClose(Runnable closeHandler) {
+        return wrap(stream.onClose(closeHandler));
+    }
+
+    @Override
+    public XIntStream parallel() {
+        return wrap(stream.parallel());
+    }
+
+    @Override
+    public XIntStream peek(Consumer<? super Integer> action) {
+        return wrap(boxed().peek(action).mapToInt(x -> x));
+    }
+
+    @Override
+    public XIntStream sequential() {
+        return wrap(stream.sequential());
+    }
+
+    @Override
+    public XIntStream skip(long n) {
+        return wrap(stream.skip(n));
+    }
+
+    @Override
+    public XIntStream sorted() {
+        return wrap(stream.sorted());
+    }
+
+    @Override
+    public XIntStream sorted(Comparator<? super Integer> comparator) {
+        return wrap(boxed().sorted(comparator).mapToInt(x -> x));
+    }
+
+    @Override
+    public Spliterator.OfInt spliterator() {
+        return stream.spliterator();
+    }
+
+    @Override
+    public XIntStream unordered() {
+        return wrap(stream.unordered());
     }
 
     @Override
@@ -126,12 +237,6 @@ class XIntStream extends XPrimitiveBaseStream<Integer, XIntStream> implements In
     }
 
     @Override
-    public Optional<Integer> first() {
-        OptionalInt val = findFirst();
-        return val.isPresent() ? Optional.ofNullable(val.getAsInt()) : Optional.ofNullable(null);
-    }
-
-    @Override
     public OptionalInt findAny() {
         return stream.findAny();
     }
@@ -144,113 +249,5 @@ class XIntStream extends XPrimitiveBaseStream<Integer, XIntStream> implements In
     @Override
     public XDoubleStream asDoubleStream() {
         return XDoubleStream.wrap(stream.asDoubleStream());
-    }
-
-    @Override
-    public XStream<Integer> boxed() {
-        return XStream.wrap(stream.boxed());
-    }
-
-    @Override
-    public PrimitiveIterator.OfInt iterator() {
-        return stream.iterator();
-    }
-
-    @Override
-    public Spliterator.OfInt spliterator() {
-        return stream.spliterator();
-    }
-
-    @Override
-    protected XIntStream createInstance(Stream<Integer> stream) {
-        return wrap(stream.mapToInt(x -> x));
-    }
-
-    @Override
-    public XIntStream filter(Predicate<? super Integer> predicate) {
-        return wrap(stream.filter(t -> predicate.test(t)));
-    }
-
-
-    @Override
-    public XIntStream mapToInt(ToIntFunction<? super Integer> mapper) {
-        return this;
-    }
-
-
-    @Override
-    public XIntStream distinct() {
-        return wrap(stream.distinct());
-    }
-
-    @Override
-    public XIntStream sorted() {
-        return wrap(stream.sorted());
-    }
-
-    @Override
-    public XIntStream sorted(Comparator<? super Integer> comparator) {
-        return wrap(boxed().sorted(comparator).mapToInt(x -> x));
-    }
-
-    @Override
-    public XIntStream peek(Consumer<? super Integer> action) {
-        return wrap(boxed().peek(action).mapToInt(x -> x));
-    }
-
-    @Override
-    public XIntStream limit(long maxSize) {
-        return wrap(stream.limit(maxSize));
-    }
-
-    @Override
-    public XIntStream skip(long n) {
-        return wrap(stream.skip(n));
-    }
-
-    @Override
-    public void forEach(Consumer<? super Integer> action) {
-        boxed().forEach(action);
-    }
-
-    @Override
-    public void forEachOrdered(Consumer<? super Integer> action) {
-        boxed().forEachOrdered(action);
-    }
-
-
-    @Override
-    public long count() {
-        return stream.count();
-    }
-
-    @Override
-    public boolean isParallel() {
-        return stream.isParallel();
-    }
-
-    @Override
-    public XIntStream sequential() {
-        return wrap(stream.sequential());
-    }
-
-    @Override
-    public XIntStream parallel() {
-        return wrap(stream.parallel());
-    }
-
-    @Override
-    public XIntStream unordered() {
-        return wrap(stream.unordered());
-    }
-
-    @Override
-    public XIntStream onClose(Runnable closeHandler) {
-        return wrap(stream.onClose(closeHandler));
-    }
-
-    @Override
-    public void close() {
-        stream.close();
     }
 }

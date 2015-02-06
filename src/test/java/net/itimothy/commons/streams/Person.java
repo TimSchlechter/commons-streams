@@ -19,30 +19,16 @@ public class Person {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
     public static List<Person> getAll() {
         return Arrays.asList(Ann, Bob, Carol);
-    }
-
-    public static List<Person> getAllWomen() {
-        return Arrays.asList(Ann, Carol);
     }
 
     public static List<Person> getAllMen() {
         return Arrays.asList(Bob);
     }
 
-    public static List<Person> getSortedByName() {
-        return getAll().stream()
-            .sorted(Comparator.comparing(p -> p.getName()))
-            .collect(toList());
+    public static List<Person> getAllWomen() {
+        return Arrays.asList(Ann, Carol);
     }
 
     public static List<Person> getSortedByAge() {
@@ -51,7 +37,21 @@ public class Person {
             .collect(toList());
     }
 
+    public static List<Person> getSortedByName() {
+        return getAll().stream()
+            .sorted(Comparator.comparing(p -> p.getName()))
+            .collect(toList());
+    }
+
     public List<Person> asList() {
         return Arrays.asList(this);
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
     }
 }

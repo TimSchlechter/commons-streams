@@ -9,16 +9,6 @@ import static org.junit.Assert.assertTrue;
 
 public class XIntStreamTest extends BaseTest {
     @Test
-    public void contains_valueInStream_shouldReturnTrue() {
-        assertTrue(stream(1, 2, 3).contains(1));
-    }
-
-    @Test
-    public void contains_valueNotInStream_shouldReturnFalse() {
-        assertFalse(stream(1, 2, 3).contains(4));
-    }
-
-    @Test
     public void any_emptyStream_shouldReturnFalse() {
         assertFalse(stream().any());
     }
@@ -29,42 +19,20 @@ public class XIntStreamTest extends BaseTest {
     }
 
     @Test
-    public void union_streamWithDistinctValues_shouldReturnAllValues() {
+    public void contains_valueInStream_shouldReturnTrue() {
+        assertTrue(stream(1, 2, 3).contains(1));
+    }
+
+    @Test
+    public void contains_valueNotInStream_shouldReturnFalse() {
+        assertFalse(stream(1, 2, 3).contains(4));
+    }
+
+    @Test
+    public void difference_noSharedValues_shouldReturnAllValuesInFirstStream() {
         assertXStream(
             stream(new int[] {1, 2}),
-            stream(new int[] {1}).union(stream(new int[] {2}))
-        );
-    }
-
-    @Test
-    public void union_streamWithSameValues_shouldReturnAllUniqueValues() {
-        assertXStream(
-            stream(new int[] {1, 2, 3}),
-            stream(new int[] {1, 2}).union(stream(new int[] {2, 3}))
-        );
-    }
-
-    @Test
-    public void intersect_oneValueInBothStreams_shouldReturnOneValue() {
-        assertXStream(
-            stream(new int[]{2}),
-            stream(new int[]{1, 2}).intersect(asList(2, 3))
-        );
-    }
-
-    @Test
-    public void intersect_noSharedValues_shouldReturnEmptyStream() {
-        assertXStream(
-            stream().mapToInt(i -> 0),
-            stream(new int[] {1, 2}).intersect(asList(3, 4))
-        );
-    }
-
-    @Test
-    public void intersect_sameValue_shouldReturnDistinctValues() {
-        assertXStream(
-            stream(new int[] {1}),
-            stream(new int[] {1, 1}).intersect(asList(1))
+            stream(new int[] {1, 2}).difference(asList(3, 4))
         );
     }
 
@@ -77,18 +45,50 @@ public class XIntStreamTest extends BaseTest {
     }
 
     @Test
-    public void difference_noSharedValues_shouldReturnAllValuesInFirstStream() {
-        assertXStream(
-            stream(new int[] {1, 2}),
-            stream(new int[] {1, 2}).difference(asList(3, 4))
-        );
-    }
-
-    @Test
     public void difference_sameValue_shouldReturnDistinctValuesOnlyInFirstStream() {
         assertXStream(
             stream(new int[] {1}),
             stream(new int[] {1, 1, 2}).difference(asList(2))
+        );
+    }
+
+    @Test
+    public void intersect_noSharedValues_shouldReturnEmptyStream() {
+        assertXStream(
+            stream().mapToInt(i -> 0),
+            stream(new int[] {1, 2}).intersect(asList(3, 4))
+        );
+    }
+
+    @Test
+    public void intersect_oneValueInBothStreams_shouldReturnOneValue() {
+        assertXStream(
+            stream(new int[]{2}),
+            stream(new int[]{1, 2}).intersect(asList(2, 3))
+        );
+    }
+
+    @Test
+    public void intersect_sameValue_shouldReturnDistinctValues() {
+        assertXStream(
+            stream(new int[] {1}),
+            stream(new int[] {1, 1}).intersect(asList(1))
+        );
+    }
+
+    @Test
+    public void union_streamWithDistinctValues_shouldReturnAllValues() {
+        assertXStream(
+            stream(new int[] {1, 2}),
+            stream(new int[] {1}).union(stream(new int[]{2}))
+        );
+    }
+
+    @Test
+    public void union_streamWithSameValues_shouldReturnAllUniqueValues() {
+        assertXStream(
+            stream(new int[] {1, 2, 3}),
+            stream(new int[] {1, 2}).union(stream(new int[]{2, 3}))
         );
     }
 

@@ -120,7 +120,7 @@ stream(people).sorted(p -> p.getAge())
 stream(people).without(bob)
 // → [ann, carol]
 
-stream(people).without(p -> p.getAge() > 25)
+stream(people).without(p -> p.getAge() < 25)
 // → [ann]
 ```
 
