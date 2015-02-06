@@ -33,6 +33,11 @@ stream(bob.getName()).anyMatch('b');
 stream(bob.getName()).union(carol.getName()).toList();
 // → ['B','o','b',c','a','r','l']
 
+parallelStream(people)
+// → a parallel XStream
+
+unorderedStream(people)
+// → an unordered XStream
 ```
 
 ### Operations
