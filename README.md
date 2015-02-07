@@ -73,24 +73,6 @@ stream(people).findFirst(p -> p.getName() == "John").isPresent();
 // → false
 ```
 
-##### .findFirstOrDefault(Predicate&lt;T&gt;, T defaultValue)
-```java
-stream(people).findFirstOrDefault(p -> p.getName() == "Bob", carol);
-// → bob
-
-stream(people).findFirstOrDefault(p -> p.getName() == "John", carol);
-// → carol
-```
-
-##### .findFirstOrNull(Predicate&lt;T&gt;)
-```java
-stream(people).findFirstOrNull(p -> p.getName() == "Bob");
-// → bob
-
-stream(people).findFirstOrNull(p -> p.getName() == "John");
-// → null
-```
-
 ##### .flatten()
 ```java
 Node root = new Node("root", asList(

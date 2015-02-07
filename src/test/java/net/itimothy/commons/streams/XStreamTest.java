@@ -9,43 +9,7 @@ import static org.junit.Assert.assertFalse;
 
 public class XStreamTest extends BaseTest {
     @Test
-    public void findFirstOrDefault_matchingPredicate_ShouldReturnMatchingObject() {
-        assertEquals(
-            Person.Bob,
-            stream(Person.getAll())
-                .findFirstOrDefault(p -> p.getName() == Person.Bob.getName(), Person.Carol)
-        );
-    }
-
-    @Test
-    public void findFirstOrDefault_nonMatchingPredicate_ShouldReturnDefaultValue() {
-        assertEquals(
-            Person.Carol,
-            stream(Person.getAll())
-                .findFirstOrDefault(p -> p.getName() == "non-matching-name", Person.Carol)
-        );
-    }
-
-    @Test
-    public void findFirstOrNull_matchingPredicate_ShouldReturnMatchingObject() {
-        assertEquals(
-            Person.Bob,
-            stream(Person.getAll())
-                .findFirstOrNull(p -> p.getName() == Person.Bob.getName())
-        );
-    }
-
-    @Test
-    public void findFirstOrNull_nonMatchingPredicate_ShouldReturnNull() {
-        assertEquals(
-            null,
-            stream(Person.getAll())
-                .findFirstOrNull(p -> p.getName() == "non-matching-name")
-        );
-    }
-
-    @Test
-      public void findFirst_matchingPredicate_ShouldReturnPresentOptional() {
+    public void findFirst_matchingPredicate_ShouldReturnPresentOptional() {
         assertEquals(
             Person.Bob,
             stream(Person.getAll())

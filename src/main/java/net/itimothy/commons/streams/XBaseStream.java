@@ -80,38 +80,6 @@ abstract class XBaseStream<T, X extends XBaseStream<T, X>> {
         return filter(predicate).first();
     }
 
-    /**
-     * Returns an object describing the first element of this stream that match the given predicate, or {@param
-     * defaultValue} if the stream is empty or no element matches.  If the stream has no encounter order, then any
-     * matching element may be returned.
-     * <p/>
-     * <p>This is a <a href="package-summary.html#StreamOps">short-circuiting terminal operation</a>.
-     *
-     * @return an object describing the first element of this stream that match the given predicate, or {@param
-     * defaultValue} if the stream is empty or no element matches
-     * @throws NullPointerException if the element selected is null
-     */
-    public T findFirstOrDefault(Predicate<T> predicate, T defaultValue) {
-        Optional<T> result = findFirst(predicate);
-        return result.isPresent() ? result.get() : defaultValue;
-    }
-
-    /**
-     * Returns an object describing the first element of this stream that match the given predicate, or {@code null} if
-     * the stream is empty or no element matches.  If the stream has no encounter order, then any matching element may
-     * be returned.
-     * <p/>
-     * <p>This is a <a href="package-summary.html#StreamOps">short-circuiting terminal operation</a>.
-     *
-     * @return an object describing the first element of this stream that match the given predicate, or {@code null} if
-     * the stream is empty or no element matches
-     * @throws NullPointerException if the element selected is null
-     */
-    public T findFirstOrNull(Predicate<T> predicate) {
-        Optional<T> result = findFirst(predicate);
-        return result.isPresent() ? result.get() : null;
-    }
-
     protected abstract Optional<T> first();
 
     public abstract <R> XStream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper);
