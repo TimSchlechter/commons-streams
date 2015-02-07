@@ -1,4 +1,4 @@
-# net.itimothy.commons.streams
+# commons-streams
 A lightweight wrapper around the [Java Streams API](http://docs.oracle.com/javase/8/docs/api/java/util/stream/package-
 summary.html).
 
