@@ -88,7 +88,7 @@ Node root = new Node("root", asList(
 stream(root)
     .flatten(n -> stream(n.getChildren()))
     .map(n -> n.getName())
-// → ["1", "2", "2.1", "2.2", "2.2.1"]
+// → ["root", "1", "2", "2.1", "2.2", "2.2.1"]
 ```
 
 ##### .sorted()
